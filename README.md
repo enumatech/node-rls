@@ -1,21 +1,22 @@
-[[https://travis-ci.org/enumatech/node-rls][https://travis-ci.org/enumatech/node-rls.svg?branch=master]]
+[![Build Status](https://travis-ci.org/enumatech/node-rls.svg?branch=master)](https://travis-ci.org/enumatech/node-rls)
 
-* =node-rls= - Request Local Storage for nodejs
-=node-rls= Is a library for attaching metadata to a nodejs call.
+# `node-rls` - Request Local Storage for nodejs
+
+`node-rls` Is a library for attaching metadata to a nodejs call stack.
 It provides high-level key-value store style functions that are concurrency safe.
 
 This can be extremely useful for logging where you want to attach metadata like request ids which you want to implicitly propagate to your logging function.
 
-To accomplish this =node-rls= uses nodejs [[https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md][async hooks]].
-For more information see [[https://github.com/othiym23/node-continuation-local-storage][node-continuation-local-storage]] and [[https://github.com/jeff-lewis/cls-hooked][cls-hooked]].
+To accomplish this `node-rls` uses nodejs [async hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md).
+For more information see [node-continuation-local-storage](https://github.com/othiym23/node-continuation-local-storage) and [cls-hooked](https://github.com/jeff-lewis/cls-hooked).
 
-** Installation
-#+begin_src shell
-npm install node-rls
-#+end_src
+## Installation
+```shell
+$ npm install node-rls
+```
 
-** Usage
-#+begin_src javascript
+## Usage
+``` javascript
 const RLS = require('node-rls')
 
 async function main () {
@@ -27,13 +28,13 @@ main().then(console.log).catch(err => {
   console.error(err)
   process.exit(1)
 })
-#+end_src
-
+```
 For more examples see the tests
 
-** Using as an express middleware
+## Using as an express middleware
+
 In this example we attach a request id to incoming requests
-#+begin_src javascript
+```javascript
 const RLSMiddleware = require('node-rls/middleware')
 const RLS = require('node-rls')
 const Express = require('express')
@@ -48,7 +49,7 @@ app.use(RLSMiddleware.express)
 app.use((req, res, next) => {
   RLS.set('requestid', requestid)
     .then(() => next())
-})
+  })
 
 // Create an endpoint returning the request id
 app.get('/', async function (req, res) {
@@ -56,10 +57,10 @@ app.get('/', async function (req, res) {
     'requestid': await RLS.get('requestid')
   })
 })
-#+end_src
+```
 
-** Documentation
+## Documentation
 You can build the documentation using jsdoc
-#+begin_src shell
+``` shell
 $ make
-#+end_src
+```
