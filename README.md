@@ -19,14 +19,14 @@ $ npm install node-rls
 
 ## Usage
 ``` javascript
-const RLS = require('node-rls')
+const RLS = require('./index.js')
 
 async function main () {
   await RLS.set('foo', 'bar')
-  console.log(await RLS.get('foo'))
+  return RLS.get('foo')
 }
 
-main().then(console.log).catch(err => {
+RLS.run(main).then(console.log).catch(err => {
   console.error(err)
   process.exit(1)
 })
@@ -70,8 +70,8 @@ app.get('/', async function (req, res) {
     * [.set(key, value)](#module_node-rls.set) ⇒ <code>undefined</code>
     * [.delete(key)](#module_node-rls.delete) ⇒ <code>undefined</code>
     * [.update(obj)](#module_node-rls.update) ⇒ <code>undefined</code>
-    * [.incr(key, count)](#module_node-rls.incr) ⇒ <code>undefined</code>
-    * [.decr(key, count)](#module_node-rls.decr) ⇒ <code>undefined</code>
+    * [.incr(key, count)](#module_node-rls.incr) ⇒ <code>Number</code>
+    * [.decr(key, count)](#module_node-rls.decr) ⇒ <code>Number</code>
 
 <a name="module_node-rls.run"></a>
 
@@ -159,10 +159,11 @@ console.log(await get('foo'))  // Prints bar
 ```
 <a name="module_node-rls.incr"></a>
 
-### node-rls.incr(key, count) ⇒ <code>undefined</code>
+### node-rls.incr(key, count) ⇒ <code>Number</code>
 Atomically increment a counter
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
+**Returns**: <code>Number</code> - Counter after increment  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -171,10 +172,11 @@ Atomically increment a counter
 
 <a name="module_node-rls.decr"></a>
 
-### node-rls.decr(key, count) ⇒ <code>undefined</code>
+### node-rls.decr(key, count) ⇒ <code>Number</code>
 Atomically decrement a counter
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
+**Returns**: <code>Number</code> - Counter after decrement  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -149,7 +149,7 @@ exports.update = async function (obj) {
  *
  * @param {object} key - Storage key
  * @param {object} count - Increment by count
- * @returns {undefined}
+ * @returns {Number} Counter after increment
  */
 exports.incr = async function (key, count) {
   return incrDecrNumber(key, count, (value, count) => {
@@ -162,7 +162,7 @@ exports.incr = async function (key, count) {
  *
  * @param {object} key - Storage key
  * @param {object} count - Decrement by count
- * @returns {undefined}
+ * @returns {Number} Counter after decrement
  */
 exports.decr = async function (key, count) {
   return incrDecrNumber(key, count, (value, count) => {

@@ -19,14 +19,14 @@ $ npm install node-rls
 
 ## Usage
 ``` javascript
-const RLS = require('node-rls')
+const RLS = require('./index.js')
 
 async function main () {
   await RLS.set('foo', 'bar')
-  console.log(await RLS.get('foo'))
+  return RLS.get('foo')
 }
 
-main().then(console.log).catch(err => {
+RLS.run(main).then(console.log).catch(err => {
   console.error(err)
   process.exit(1)
 })
