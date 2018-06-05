@@ -47,6 +47,7 @@ app.use(RLSMiddleware.express)
 
 // Attach the requestid to the request
 app.use((req, res, next) => {
+  const requestid = UUID.v4()
   RLS.set('requestid', requestid)
     .then(() => next())
   })
