@@ -1,0 +1,4 @@
+node_modules
+doc
+/.nyc_output/
+.dir-locals.el
