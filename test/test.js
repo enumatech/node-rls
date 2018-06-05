@@ -60,7 +60,7 @@ describe('Test getters/setters', () => {
     }))
 
     it('Can decrement', async () => RLS.run(async () => {
-      const n = 200
+      const n = 20
       let promises = []
 
       RLS.set('ctr', n)
@@ -74,7 +74,7 @@ describe('Test getters/setters', () => {
     }))
 
     it('Can increment', async () => RLS.run(async () => {
-      const n = 200
+      const n = 20
       let promises = []
 
       for (let i = 0; i <= n; i++) {
@@ -84,6 +84,14 @@ describe('Test getters/setters', () => {
       await Promise.all(promises)
 
       expect(await RLS.get('ctr')).equal(n + 1)
+    }))
+
+    it('Incr returns', async () => RLS.run(async () => {
+      expect(await RLS.incr('ctr')).equal(1)
+    }))
+
+    it('Decr returns', async () => RLS.run(async () => {
+      expect(await RLS.decr('ctr')).equal(-1)
     }))
   })
 })

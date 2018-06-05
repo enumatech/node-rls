@@ -2,6 +2,9 @@ const createNamespace = require('cls-hooked').createNamespace
 const ns = createNamespace('_express_request_local_storage')
 const AsyncLock = require('async-lock')
 
+/**
+ * @module node-rls
+ */
 exports = module.exports = {}
 
 function getMeta () {
@@ -40,14 +43,29 @@ async function incrDecrNumber (key, count, valueCb) {
     value = valueCb(value, count)
 
     kv[key] = value
+    return value
   })
 }
 
 /**
- * Create a new context and run callback
+ * Create a new context and run callback.
  *
  * @param {function} callback - Async callback
  * @returns {object} Result from callback
+ * @example
+ * // Any called function will have access to conext
+ * // even async ones
+ *
+ * function func () {
+ *   return RLS.get('requestid')
+ * }
+ *
+ * RLS.run(async () => {
+ *   const requestid = 'somerandomvalue'
+ *   await RLS.set('requestid', requestid)
+ *
+ *   assert.strictEqual(await func(), requestid)
+ * })
  */
 exports.run = async function (callback) {
   return ns.runAndReturn(async () => {
@@ -63,7 +81,7 @@ exports.run = async function (callback) {
 }
 
 /**
- * Get storage object
+ * Get object from storage.
  *
  * @param {String} key - Storage key
  * @returns {object} Stored object
@@ -79,7 +97,7 @@ exports.get = async function (key) {
  *
  * @param {String} key - Storage key
  * @param {object} value - Storage key
- * @returns {object} Stored object
+ * @returns {undefined} Returns nothing
  */
 exports.set = async function (key, value) {
   return withLock(async () => {
@@ -93,7 +111,7 @@ exports.set = async function (key, value) {
  * Delete storage object
  *
  * @param {String} key - Storage key
- * @returns {undefined}
+ * @returns {undefined} Returns nothing
  */
 exports.delete = async function (key) {
   return withLock(async () => {
@@ -107,9 +125,14 @@ exports.delete = async function (key) {
  * Update storage from a map
  *
  * @param {object} obj - KV mapping object
- * @returns {object} Stored object
+ * @returns {undefined} No return value
+ * @example
+ * // Update storage with all values from object
+ * const obj = {foo: 'bar', someKey: 'someValue'}
+ * await update(obj)
+ * console.log(await get('foo'))  // Prints bar
  */
-exports.update = function (obj) {
+exports.update = async function (obj) {
   const meta = getMeta()
 
   return withLock(async () => {
