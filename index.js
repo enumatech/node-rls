@@ -74,7 +74,7 @@ exports.NotInitializedError = NotInitializedError
  *
  * @async
  * @param {function} callback - Async callback
- * @returns {object} Result from callback
+ * @returns {Object} Result from callback
  * @example
  * // Any called function will have access to conext
  * // even async ones
@@ -108,7 +108,7 @@ exports.run = async function (callback) {
  *
  * @async
  * @param {String} key - Storage key
- * @returns {object} Stored object
+ * @returns {Object} Stored object
  * @throws {NotInitializedError}
  */
 exports.get = async function (key) {
@@ -122,7 +122,7 @@ exports.get = async function (key) {
  * Mutating this object will NOT mutate the KV store
  *
  * @async
- * @returns {object} Shallow copy of KV store
+ * @returns {Object} Shallow copy of KV store
  * @throws {NotInitializedError}
  */
 exports.copy = async function () {
@@ -136,7 +136,7 @@ exports.copy = async function () {
  *
  * @async
  * @param {String} key - Storage key
- * @param {object} value - Storage key
+ * @param {Object} value - Storage key
  * @returns {undefined} Returns nothing
  * @throws {NotInitializedError}
  */
@@ -168,7 +168,7 @@ exports.delete = async function (key) {
  * Update storage from a map
  *
  * @async
- * @param {object} obj - KV mapping object
+ * @param {Object} obj - KV mapping object
  * @returns {undefined} No return value
  * @throws {NotInitializedError}
  * @example
@@ -193,8 +193,8 @@ exports.update = async function (obj) {
  * Atomically increment a counter
  *
  * @async
- * @param {object} key - Storage key
- * @param {object} count - Increment by count
+ * @param {Object} key - Storage key
+ * @param {Object} count - Increment by count
  * @throws {NotInitializedError}
  * @returns {Number} Counter after increment
  */
@@ -208,8 +208,8 @@ exports.incr = async function (key, count) {
  * Atomically decrement a counter
  *
  * @async
- * @param {object} key - Storage key
- * @param {object} count - Decrement by count
+ * @param {Object} key - Storage key
+ * @param {Object} count - Decrement by count
  * @throws {NotInitializedError}
  * @returns {Number} Counter after decrement
  */

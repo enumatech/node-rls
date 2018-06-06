@@ -67,9 +67,9 @@ app.get('/', async function (req, res) {
 * [node-rls](#module_node-rls)
     * [.NotInitializedError](#module_node-rls.NotInitializedError) : <code>Error</code>
         * [new NotInitializedError(message)](#new_module_node-rls.NotInitializedError_new)
-    * [.run(callback)](#module_node-rls.run) ⇒ <code>object</code>
-    * [.get(key)](#module_node-rls.get) ⇒ <code>object</code>
-    * [.copy()](#module_node-rls.copy) ⇒ <code>object</code>
+    * [.run(callback)](#module_node-rls.run) ⇒ <code>Object</code>
+    * [.get(key)](#module_node-rls.get) ⇒ <code>Object</code>
+    * [.copy()](#module_node-rls.copy) ⇒ <code>Object</code>
     * [.set(key, value)](#module_node-rls.set) ⇒ <code>undefined</code>
     * [.delete(key)](#module_node-rls.delete) ⇒ <code>undefined</code>
     * [.update(obj)](#module_node-rls.update) ⇒ <code>undefined</code>
@@ -92,11 +92,11 @@ Thrown when context has not yet been initialized
 
 <a name="module_node-rls.run"></a>
 
-### node-rls.run(callback) ⇒ <code>object</code>
+### node-rls.run(callback) ⇒ <code>Object</code>
 Create a new context and run callback.
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
-**Returns**: <code>object</code> - Result from callback  
+**Returns**: <code>Object</code> - Result from callback  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -120,11 +120,11 @@ RLS.run(async () => {
 ```
 <a name="module_node-rls.get"></a>
 
-### node-rls.get(key) ⇒ <code>object</code>
+### node-rls.get(key) ⇒ <code>Object</code>
 Get object from storage.
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
-**Returns**: <code>object</code> - Stored object  
+**Returns**: <code>Object</code> - Stored object  
 **Throws**:
 
 - <code>NotInitializedError</code> 
@@ -136,12 +136,12 @@ Get object from storage.
 
 <a name="module_node-rls.copy"></a>
 
-### node-rls.copy() ⇒ <code>object</code>
+### node-rls.copy() ⇒ <code>Object</code>
 Get KV store as a javascript object
 Mutating this object will NOT mutate the KV store
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
-**Returns**: <code>object</code> - Shallow copy of KV store  
+**Returns**: <code>Object</code> - Shallow copy of KV store  
 **Throws**:
 
 - <code>NotInitializedError</code> 
@@ -161,7 +161,7 @@ Set storage object
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | Storage key |
-| value | <code>object</code> | Storage key |
+| value | <code>Object</code> | Storage key |
 
 <a name="module_node-rls.delete"></a>
 
@@ -193,7 +193,7 @@ Update storage from a map
 
 | Param | Type | Description |
 | --- | --- | --- |
-| obj | <code>object</code> | KV mapping object |
+| obj | <code>Object</code> | KV mapping object |
 
 **Example**  
 ```js
@@ -216,8 +216,8 @@ Atomically increment a counter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| key | <code>object</code> | Storage key |
-| count | <code>object</code> | Increment by count |
+| key | <code>Object</code> | Storage key |
+| count | <code>Object</code> | Increment by count |
 
 <a name="module_node-rls.decr"></a>
 
@@ -233,6 +233,6 @@ Atomically decrement a counter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| key | <code>object</code> | Storage key |
-| count | <code>object</code> | Decrement by count |
+| key | <code>Object</code> | Storage key |
+| count | <code>Object</code> | Decrement by count |
 
