@@ -65,6 +65,8 @@ app.get('/', async function (req, res) {
 ## API Reference
 
 * [node-rls](#module_node-rls)
+    * [.NotInitializedError](#module_node-rls.NotInitializedError) : <code>Error</code>
+        * [new NotInitializedError(message)](#new_module_node-rls.NotInitializedError_new)
     * [.run(callback)](#module_node-rls.run) ⇒ <code>object</code>
     * [.get(key)](#module_node-rls.get) ⇒ <code>object</code>
     * [.set(key, value)](#module_node-rls.set) ⇒ <code>undefined</code>
@@ -72,6 +74,20 @@ app.get('/', async function (req, res) {
     * [.update(obj)](#module_node-rls.update) ⇒ <code>undefined</code>
     * [.incr(key, count)](#module_node-rls.incr) ⇒ <code>Number</code>
     * [.decr(key, count)](#module_node-rls.decr) ⇒ <code>Number</code>
+
+<a name="module_node-rls.NotInitializedError"></a>
+
+### node-rls.NotInitializedError : <code>Error</code>
+**Kind**: static class of [<code>node-rls</code>](#module_node-rls)  
+<a name="new_module_node-rls.NotInitializedError_new"></a>
+
+#### new NotInitializedError(message)
+Thrown when context has not yet been initialized
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | Error message |
 
 <a name="module_node-rls.run"></a>
 
@@ -108,6 +124,10 @@ Get object from storage.
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>object</code> - Stored object  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -120,6 +140,10 @@ Set storage object
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>undefined</code> - Returns nothing  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -133,6 +157,10 @@ Delete storage object
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>undefined</code> - Returns nothing  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -145,6 +173,10 @@ Update storage from a map
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>undefined</code> - No return value  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -164,6 +196,10 @@ Atomically increment a counter
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>Number</code> - Counter after increment  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -177,6 +213,10 @@ Atomically decrement a counter
 
 **Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
 **Returns**: <code>Number</code> - Counter after decrement  
+**Throws**:
+
+- <code>NotInitializedError</code> 
+
 
 | Param | Type | Description |
 | --- | --- | --- |

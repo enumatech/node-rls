@@ -34,6 +34,16 @@ describe('Test getters/setters', () => {
     expect(await RLS.get('foo')).equal(undefined)
   }))
 
+  it('Calling uninitialized throws', async () => {
+    try {
+      await RLS.set('foo')
+      // Always reach catch block, even if set does not throw
+      throw new Error('Dummy test')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(RLS.NotInitializedError)
+    }
+  })
+
   context('Increment & decrement', () => {
     it('Cannot increment if value was NaN', async () => RLS.run(async () => {
       await RLS.set('ctr', 'aoeu')

@@ -1,6 +1,6 @@
 {
   "name": "node-rls",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Request local storage for nodejs",
   "main": "index.js",
   "scripts": {

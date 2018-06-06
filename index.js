@@ -1,3 +1,5 @@
+'use strict'
+
 const createNamespace = require('cls-hooked').createNamespace
 const ns = createNamespace('_express_request_local_storage')
 const AsyncLock = require('async-lock')
@@ -7,12 +9,30 @@ const AsyncLock = require('async-lock')
  */
 exports = module.exports = {}
 
+/**
+ * Thrown when context has not yet been initialized
+ *
+ * @static
+ * @param {string} message - Error message
+ * @constructor
+ * @type {Error}
+ */
+function NotInitializedError (message) {
+  Error.captureStackTrace(this, this.constructor)
+  this.name = this.constructor.name
+  this.message = message
+}
+
 function getMeta () {
   return ns.get('_meta')
 }
 
 async function withLock (callback) {
   const meta = getMeta()
+  if (meta === undefined) {
+    throw new exports.NotInitializedError('RLS context not initialized')
+  }
+
   return meta.lock.acquire('key', callback)
 }
 
@@ -47,9 +67,12 @@ async function incrDecrNumber (key, count, valueCb) {
   })
 }
 
+exports.NotInitializedError = NotInitializedError
+
 /**
  * Create a new context and run callback.
  *
+ * @async
  * @param {function} callback - Async callback
  * @returns {object} Result from callback
  * @example
@@ -83,8 +106,10 @@ exports.run = async function (callback) {
 /**
  * Get object from storage.
  *
+ * @async
  * @param {String} key - Storage key
  * @returns {object} Stored object
+ * @throws {NotInitializedError}
  */
 exports.get = async function (key) {
   return withLock(async () => {
@@ -95,9 +120,11 @@ exports.get = async function (key) {
 /**
  * Set storage object
  *
+ * @async
  * @param {String} key - Storage key
  * @param {object} value - Storage key
  * @returns {undefined} Returns nothing
+ * @throws {NotInitializedError}
  */
 exports.set = async function (key, value) {
   return withLock(async () => {
@@ -110,8 +137,10 @@ exports.set = async function (key, value) {
 /**
  * Delete storage object
  *
+ * @async
  * @param {String} key - Storage key
  * @returns {undefined} Returns nothing
+ * @throws {NotInitializedError}
  */
 exports.delete = async function (key) {
   return withLock(async () => {
@@ -124,8 +153,10 @@ exports.delete = async function (key) {
 /**
  * Update storage from a map
  *
+ * @async
  * @param {object} obj - KV mapping object
  * @returns {undefined} No return value
+ * @throws {NotInitializedError}
  * @example
  * // Update storage with all values from object
  * const obj = {foo: 'bar', someKey: 'someValue'}
@@ -147,8 +178,10 @@ exports.update = async function (obj) {
 /**
  * Atomically increment a counter
  *
+ * @async
  * @param {object} key - Storage key
  * @param {object} count - Increment by count
+ * @throws {NotInitializedError}
  * @returns {Number} Counter after increment
  */
 exports.incr = async function (key, count) {
@@ -160,8 +193,10 @@ exports.incr = async function (key, count) {
 /**
  * Atomically decrement a counter
  *
+ * @async
  * @param {object} key - Storage key
  * @param {object} count - Decrement by count
+ * @throws {NotInitializedError}
  * @returns {Number} Counter after decrement
  */
 exports.decr = async function (key, count) {
