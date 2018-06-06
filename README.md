@@ -69,6 +69,7 @@ app.get('/', async function (req, res) {
         * [new NotInitializedError(message)](#new_module_node-rls.NotInitializedError_new)
     * [.run(callback)](#module_node-rls.run) ⇒ <code>object</code>
     * [.get(key)](#module_node-rls.get) ⇒ <code>object</code>
+    * [.copy()](#module_node-rls.copy) ⇒ <code>object</code>
     * [.set(key, value)](#module_node-rls.set) ⇒ <code>undefined</code>
     * [.delete(key)](#module_node-rls.delete) ⇒ <code>undefined</code>
     * [.update(obj)](#module_node-rls.update) ⇒ <code>undefined</code>
@@ -132,6 +133,18 @@ Get object from storage.
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | Storage key |
+
+<a name="module_node-rls.copy"></a>
+
+### node-rls.copy() ⇒ <code>object</code>
+Get KV store as a javascript object
+Mutating this object will NOT mutate the KV store
+
+**Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
+**Returns**: <code>object</code> - Shallow copy of KV store  
+**Throws**:
+
+- <code>NotInitializedError</code> 
 
 <a name="module_node-rls.set"></a>
 

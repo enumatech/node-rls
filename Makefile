@@ -1,7 +1,8 @@
-all: docs
+all:
+	@echo "No target specified"
+	exit 1
 
-docs:
-	npx jsdoc -a all -r -c jsdoc.json -d doc --verbose --debug --pedantic . README.md
-
-clean:
-	rm -rf doc
+publish:
+	npm run-script docs
+	npm run-script test
+	npm publish

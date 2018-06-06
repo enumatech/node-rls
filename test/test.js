@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 
 const expect = require('chai').expect
+const assert = require('chai').assert
 const RLS = require('../index.js')
 
 describe('Test getters/setters', () => {
@@ -42,6 +43,32 @@ describe('Test getters/setters', () => {
     } catch (err) {
       expect(err).to.be.an.instanceof(RLS.NotInitializedError)
     }
+  })
+
+  context('Copying KV store', () => {
+    it('Returns correct data', async () => RLS.run(async () => {
+      const obj = {
+        'foo': 'bar',
+        'baz': 'foo'
+      }
+
+      await RLS.update(obj)
+      assert.deepStrictEqual(await RLS.copy(), obj)
+    }))
+
+    it('Mutating copy does not mutate KV store', async () => RLS.run(async () => {
+      const obj = {
+        'foo': 'bar',
+        'baz': 'foo'
+      }
+
+      await RLS.update(obj)
+
+      const copy = await RLS.copy()
+      copy['aoeu'] = 1234
+
+      assert.deepStrictEqual(await RLS.copy(), obj)
+    }))
   })
 
   context('Increment & decrement', () => {

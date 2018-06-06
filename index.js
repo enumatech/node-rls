@@ -1,7 +1,7 @@
 'use strict'
 
 const createNamespace = require('cls-hooked').createNamespace
-const ns = createNamespace('_express_request_local_storage')
+const ns = createNamespace('_node_request_local_storage')
 const AsyncLock = require('async-lock')
 
 /**
@@ -114,6 +114,20 @@ exports.run = async function (callback) {
 exports.get = async function (key) {
   return withLock(async () => {
     return getMeta().kv[key]
+  })
+}
+
+/**
+ * Get KV store as a javascript object
+ * Mutating this object will NOT mutate the KV store
+ *
+ * @async
+ * @returns {object} Shallow copy of KV store
+ * @throws {NotInitializedError}
+ */
+exports.copy = async function () {
+  return withLock(async () => {
+    return Object.assign({}, getMeta().kv)
   })
 }
 
