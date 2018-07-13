@@ -66,6 +66,16 @@ describe('Test getters/setters', () => {
       assert.deepStrictEqual(await RLS.copy(), obj)
     }))
 
+    it('Returns correct data (sync)', async () => RLS.run(async () => {
+      const obj = {
+        'foo': 'bar',
+        'baz': 'foo'
+      }
+
+      await RLS.update(obj)
+      assert.deepStrictEqual(RLS.copy(), obj)
+    }))
+
     it('Mutating copy does not mutate KV store', async () => RLS.run(async () => {
       const obj = {
         'foo': 'bar',
