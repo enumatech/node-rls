@@ -45,6 +45,16 @@ describe('Test getters/setters', () => {
     }
   })
 
+  it('Calling uninitialized copy throws', async () => {
+    try {
+      await RLS.copy('foo')
+      // Always reach catch block, even if set does not throw
+      throw new Error('Dummy test')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(RLS.NotInitializedError)
+    }
+  })
+
   context('Copying KV store', () => {
     it('Returns correct data', async () => RLS.run(async () => {
       const obj = {

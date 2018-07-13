@@ -121,14 +121,16 @@ exports.get = async function (key) {
  * Get KV store as a javascript object
  * Mutating this object will NOT mutate the KV store
  *
- * @async
  * @returns {Object} Shallow copy of KV store
  * @throws {NotInitializedError}
  */
-exports.copy = async function () {
-  return withLock(async () => {
-    return Object.assign({}, getMeta().kv)
-  })
+exports.copy = function () {
+  const meta = getMeta()
+  if (meta === undefined) {
+    throw new exports.NotInitializedError('RLS context not initialized')
+  }
+
+  return Object.assign({}, meta.kv)
 }
 
 /**
@@ -181,11 +183,8 @@ exports.update = async function (obj) {
   const meta = getMeta()
 
   return withLock(async () => {
-    const kv = meta.kv
-
-    Object.keys(obj).forEach((key) => {
-      kv[key] = obj[key]
-    })
+    const kv = Object.assign({}, meta.kv)
+    meta.kv = Object.assign(kv, obj)
   })
 }
 
