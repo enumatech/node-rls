@@ -29,6 +29,40 @@ describe('Test getters/setters', () => {
     expect(await RLS.get('baz')).equal('foo')
   }))
 
+  it('Can update fails with NotInitializedError', async () => {
+    const obj = {
+      'foo': 'bar',
+      'baz': 'foo'
+    }
+
+    try {
+      await RLS.update(obj)
+      throw new Error('update should throw')
+    } catch (err) {
+      expect(err).instanceOf(RLS.NotInitializedError)
+    }
+  })
+
+  it('Can tryUpdate', async () => RLS.run(async () => {
+    const obj = {
+      'foo': 'foo',
+      'baz': 'baz'
+    }
+
+    await RLS.tryUpdate(obj)
+    expect(await RLS.get('foo')).equal('foo')
+    expect(await RLS.get('baz')).equal('baz')
+  }))
+
+  it('tryUpdate fails silently', async () => {
+    const obj = {
+      'foo': 'foo',
+      'baz': 'baz'
+    }
+
+    await RLS.tryUpdate(obj)
+  })
+
   it('Can delete', async () => RLS.run(async () => {
     await RLS.set('foo', 'bar')
     await RLS.delete('foo')
