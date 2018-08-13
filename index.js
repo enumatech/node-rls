@@ -39,7 +39,7 @@ async function withLock (callback) {
 async function tryLock (callback) {
   const meta = getMeta()
   if (meta === undefined) {
-    return
+    return false
   }
 
   return meta.lock.acquire('key', callback)
@@ -202,7 +202,7 @@ exports.update = async function (obj) {
  *
  * @async
  * @param {Object} obj - KV mapping object
- * @returns {undefined} No return value
+ * @returns {boolean} Returns `true` on success, `false` otherwise
  * @example
  * // Update storage with all values from object
  * const obj = {foo: 'bar', someKey: 'someValue'}
@@ -215,6 +215,7 @@ exports.tryUpdate = async function (obj) {
   return tryLock(async () => {
     const kv = Object.assign({}, meta.kv)
     meta.kv = Object.assign(kv, obj)
+    return true
   })
 }
 

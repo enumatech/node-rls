@@ -49,7 +49,7 @@ describe('Test getters/setters', () => {
       'baz': 'baz'
     }
 
-    await RLS.tryUpdate(obj)
+    expect(await RLS.tryUpdate(obj)).equal(true)
     expect(await RLS.get('foo')).equal('foo')
     expect(await RLS.get('baz')).equal('baz')
   }))
@@ -60,7 +60,7 @@ describe('Test getters/setters', () => {
       'baz': 'baz'
     }
 
-    await RLS.tryUpdate(obj)
+    expect(await RLS.tryUpdate(obj)).equal(false)
   })
 
   it('Can delete', async () => RLS.run(async () => {
