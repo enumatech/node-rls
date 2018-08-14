@@ -74,6 +74,7 @@ exports.NotInitializedError = NotInitializedError
  *
  * @async
  * @param {function} callback - Async callback
+ * @param {Object} kv - Object to use as kv store (this sacrifices atomicity)
  * @returns {Object} Result from callback
  * @example
  * // Any called function will have access to conext
@@ -90,12 +91,12 @@ exports.NotInitializedError = NotInitializedError
  *   assert.strictEqual(await func(), requestid)
  * })
  */
-exports.run = async function (callback) {
+exports.run = async function (callback, kv) {
   return ns.runAndReturn(async () => {
     // Wrap all set/get operations using this meta object
     // This is so we can do proper locking
     ns.set('_meta', {
-      'kv': {}, // Key/value storage
+      'kv': kv || {}, // Key/value storage
       'lock': new AsyncLock()
     })
 
@@ -183,8 +184,7 @@ exports.update = async function (obj) {
   const meta = getMeta()
 
   return withLock(async () => {
-    const kv = Object.assign({}, meta.kv)
-    meta.kv = Object.assign(kv, obj)
+    Object.assign(meta.kv, obj)
   })
 }
 

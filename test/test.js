@@ -18,6 +18,14 @@ describe('Test getters/setters', () => {
     expect(await RLS.get('ctr')).equal(n)
   }))
 
+  it('Can get/set with mutable kv store', async () => {
+    const kv = {}
+    RLS.run(async () => {
+      RLS.set('value', 0)
+    }, kv)
+    expect(kv['value']).equal(0)
+  })
+
   it('Can update', async () => RLS.run(async () => {
     const obj = {
       'foo': 'bar',
