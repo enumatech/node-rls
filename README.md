@@ -73,6 +73,7 @@ app.get('/', async function (req, res) {
     * [.set(key, value)](#module_node-rls.set) ⇒ <code>undefined</code>
     * [.delete(key)](#module_node-rls.delete) ⇒ <code>undefined</code>
     * [.update(obj)](#module_node-rls.update) ⇒ <code>undefined</code>
+    * [.tryUpdate(obj)](#module_node-rls.tryUpdate) ⇒ <code>boolean</code>
     * [.incr(key, count)](#module_node-rls.incr) ⇒ <code>Number</code>
     * [.decr(key, count)](#module_node-rls.decr) ⇒ <code>Number</code>
 
@@ -200,6 +201,25 @@ Update storage from a map
 // Update storage with all values from object
 const obj = {foo: 'bar', someKey: 'someValue'}
 await update(obj)
+console.log(await get('foo'))  // Prints bar
+```
+<a name="module_node-rls.tryUpdate"></a>
+
+### node-rls.tryUpdate(obj) ⇒ <code>boolean</code>
+Try to update storage from a map, fails silently
+
+**Kind**: static method of [<code>node-rls</code>](#module_node-rls)  
+**Returns**: <code>boolean</code> - Returns `true` on success, `false` otherwise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | KV mapping object |
+
+**Example**  
+```js
+// Update storage with all values from object
+const obj = {foo: 'bar', someKey: 'someValue'}
+await tryUpdate(obj)
 console.log(await get('foo'))  // Prints bar
 ```
 <a name="module_node-rls.incr"></a>

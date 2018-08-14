@@ -36,6 +36,15 @@ async function withLock (callback) {
   return meta.lock.acquire('key', callback)
 }
 
+async function tryLock (callback) {
+  const meta = getMeta()
+  if (meta === undefined) {
+    return false
+  }
+
+  return meta.lock.acquire('key', callback)
+}
+
 async function incrDecrNumber (key, count, valueCb) {
   if (count === undefined) {
     count = 1
@@ -185,6 +194,28 @@ exports.update = async function (obj) {
 
   return withLock(async () => {
     Object.assign(meta.kv, obj)
+  })
+}
+
+/**
+ * Try to update storage from a map, fails silently
+ *
+ * @async
+ * @param {Object} obj - KV mapping object
+ * @returns {boolean} Returns `true` on success, `false` otherwise
+ * @example
+ * // Update storage with all values from object
+ * const obj = {foo: 'bar', someKey: 'someValue'}
+ * await tryUpdate(obj)
+ * console.log(await get('foo'))  // Prints bar
+ */
+exports.tryUpdate = async function (obj) {
+  const meta = getMeta()
+
+  return tryLock(async () => {
+    const kv = Object.assign({}, meta.kv)
+    meta.kv = Object.assign(kv, obj)
+    return true
   })
 }
 
